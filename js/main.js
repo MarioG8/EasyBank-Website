@@ -1,28 +1,31 @@
 const btnHamburger = document.querySelector('#btnHamburger');
 const body = document.querySelector('body');
 const header = document.querySelector('.header');
-const overlay = document.querySelector('.overlay');
 const fadesItems = document.querySelectorAll('.has-fade');
+const headMenu = document.querySelector('.header__menu');
 
+// Display on/off mobile Menu.
+const mobileMenu = () => {
+  if (header.classList.contains('open')) {
+    body.classList.remove('no-scroll');
+    header.classList.remove('open');
+    headMenu.classList.toggle('has-fade');
+  } else {
+    body.classList.add('no-scroll');
+    header.classList.add('open');
+    headMenu.classList.toggle('has-fade');
+  }
+};
+btnHamburger.addEventListener('click', mobileMenu);
 
-btnHamburger.addEventListener('click', function(){
-    console.log('click hamburger');
+// Close mobile menu when browser hit 1023px
+const closeHamMenu = () => {
+  if (window.innerWidth >= 1023) {
+    document.querySelector('.header__menu').style.display = 'none';
+  } else {
+    document.querySelector('.header__menu').style.display = 'block';
+  }
+};
 
-    if(header.classList.contains('open')){     //Close hamMenu
-        body.classList.remove('no-scroll');
-        header.classList.remove('open');
-        fadesItems.forEach(element => {
-            element.classList.remove('fade-in');
-            element.classList.add('fade-out');
-        });
-        
-    } else { // open hamMenu
-        body.classList.add('no-scroll');
-        header.classList.add('open');
-        fadesItems.forEach(element => {
-            element.classList.remove('fade-out');
-            element.classList.add('fade-in');
-        });
-        
-    }
-});
+window.addEventListener('load', closeHamMenu);
+window.addEventListener('resize', closeHamMenu);
